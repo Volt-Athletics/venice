@@ -20,9 +20,14 @@ describe Venice::Receipt do
           "original_purchase_date_pst" => "2014-05-16 19:09:45 America/Los_Angeles",
           "original_application_version" => "1",
           "expiration_date"              => expiration_date,
-        }
+        },
+        "pending_renewal_info"         => pending_renewal_info
       }
     end
+    let(:pending_renewal_info) {
+      [{ "expiration_intent" => "1", "auto_renew_product_id" => "com.test.app123", "is_in_billing_retry_period" => "0",
+         "product_id" => "com.test.app345", "auto_renew_status" => "1" }]
+    }
     let(:expiration_date) { nil }
     let(:in_app) do
       { "in_app" => [
@@ -98,6 +103,8 @@ describe Venice::Receipt do
     its(:latest_receipt_info)    { should be_instance_of Array }
     its(:latest_receipt_info)    { should be_empty }
     its(:latest_receipt)         { should be_nil }
+    its(:pending_renewal_info)   { should be_instance_of Array }
+    its(:pending_renewal_info)   { should eq pending_renewal_info }
 
     context "expiration date is given" do
       let(:expiration_date) { '2014-01-01 05:03:02' }

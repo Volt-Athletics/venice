@@ -35,6 +35,7 @@ module Venice
 
     attr_reader :latest_receipt
     attr_reader :latest_receipt_info
+    attr_reader :pending_renewal_info
 
     def initialize(json = {})
       attributes                    = json['receipt']
@@ -72,6 +73,7 @@ module Venice
       end
 
       @latest_receipt = json['latest_receipt']
+      @pending_renewal_info = json['pending_renewal_info']
     end
 
     def to_hash
